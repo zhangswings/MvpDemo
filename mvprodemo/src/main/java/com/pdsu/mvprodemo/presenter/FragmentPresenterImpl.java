@@ -3,16 +3,20 @@ package com.pdsu.mvprodemo.presenter;
 import com.pdsu.mvprodemo.helper.GenericHelper;
 import com.pdsu.mvprodemo.view.IView;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
- * 将Activity作为Presenter的基类 <br />
  * Created by Administrator on 2016/11/11.
  */
 
-public class ActivityPresenterImpl<T extends IView> extends Activity implements IPresenter<T>
+public class FragmentPresenterImpl<T extends IView> extends Fragment implements IPresenter<T>
 {
+
     protected T mView;
 
     @Override
@@ -33,24 +37,26 @@ public class ActivityPresenterImpl<T extends IView> extends Activity implements 
         return GenericHelper.getViewClass(getClass());
     }
 
+    @Nullable
     @Override
-    public void onCreate(final Bundle savedInstanceState)
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        //        return super.onCreateView(inflater, container, savedInstanceState);
         create(savedInstanceState);
 
         try
         {
             mView = getViewClass().newInstance();
+            View view = mView.create(inflater, container);
             mView.bindPresenter(this);
-            setContentView(mView.create(getLayoutInflater(), null));
-
             mView.bindEvent();
+
             created(savedInstanceState);
+            return view;
         }
         catch (Exception e)
         {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

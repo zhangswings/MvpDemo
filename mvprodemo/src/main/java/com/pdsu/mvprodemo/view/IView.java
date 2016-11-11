@@ -39,10 +39,10 @@ public interface IView
 
     /**
      * @param id
-     * @param <T>
+     * @param <V>
      * @return
      */
-    <T extends View> T findViewById(int id);
+    <V extends View> V findViewById(int id);
 
     /**
      * 返回当前视图需要的layout的id
