@@ -26,6 +26,7 @@
             android:inputType="text" />
 
     <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
     <LinearLayout
             android:layout_width="match_parent"
